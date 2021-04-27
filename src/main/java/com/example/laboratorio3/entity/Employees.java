@@ -3,6 +3,7 @@ package com.example.laboratorio3.entity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -19,6 +20,16 @@ public class Employees {
     @JoinColumn(name = "department_id")
     private
     Departaments departament;
+
+    private LocalDateTime hireDate;
+
+    public LocalDateTime getHireDate() {
+        return hireDate;
+    }
+
+    public void setHireDate(LocalDateTime hireDate) {
+        this.hireDate = hireDate;
+    }
 
     public int getEmployeeId() {
         return employeeId;
