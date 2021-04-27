@@ -92,6 +92,12 @@ public class EmployeeController {
         if (optionalEmployees.isPresent()) {
             employees = optionalEmployees.get();
             model.addAttribute("employee", employees);
+
+            List<Departaments> departaments = departamentsRepository.findAll();
+            List<Jobs> jobs = jobsRepository.findAll();
+            model.addAttribute("departaments", departaments);
+            model.addAttribute("jobs", jobs);
+
             return "employee/editFrm";
         } else {
             return "redirect:/employee/list";
