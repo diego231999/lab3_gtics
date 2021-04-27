@@ -8,6 +8,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" ></script>
 </head>
 <body class="container">
+
+<nav th:replace="index.html :: nav"></nav>
+
 <h1>Gestión de Búsquedas</h1>
 <a th:href="@{}">Empleados con Mayor Salario a 15000</a><br />                <!-- COMPLETAR -->
 <a th:href="@{}">Reporte de salario máximo por departamento</a><br />                <!-- COMPLETAR -->
