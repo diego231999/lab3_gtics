@@ -9,7 +9,7 @@ public class Jobs{
     @Id
     @Column(nullable = false)
     private String jobId;
-    private String jobTittle;
+    private String jobTitle;
     private int minSalary;
     private int maxSalary;
 
@@ -19,14 +19,6 @@ public class Jobs{
 
     public void setJobId(String jobId) {
         this.jobId = jobId;
-    }
-
-    public String getJobTittle() {
-        return jobTittle;
-    }
-
-    public void setJobTittle(String jobTittle) {
-        this.jobTittle = jobTittle;
     }
 
     public int getMinSalary() {
@@ -43,5 +35,13 @@ public class Jobs{
 
     public void setMaxSalary(int maxSalary) {
         this.maxSalary = maxSalary;
+    }
+
+    public String getJobTitle() {
+        return jobTitle;
+    }
+
+    public void setJobTitle(String jobTitle) {
+        this.jobTitle = jobTitle;
     }
 }

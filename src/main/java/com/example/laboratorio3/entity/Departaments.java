@@ -7,14 +7,14 @@ import javax.persistence.*;
 public class Departaments {
 
     @Id
-    private
-    int departmentId;
+    private int departmentId;
     private String departmentName;
+
+    private Integer managerId;
 
     @ManyToOne
     @JoinColumn(name = "location_id")
-    private
-    Locations location;
+    private Locations location;
 
     public int getDepartmentId() {
         return departmentId;
@@ -38,5 +38,13 @@ public class Departaments {
 
     public void setLocation(Locations location) {
         this.location = location;
+    }
+
+    public Integer getManagerId() {
+        return managerId;
+    }
+
+    public void setManagerId(Integer managerId) {
+        this.managerId = managerId;
     }
 }

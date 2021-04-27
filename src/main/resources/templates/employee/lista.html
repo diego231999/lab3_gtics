@@ -14,24 +14,50 @@
 
     <div class="container">
         <h1>Lista de Empleados</h1>
-<!--        <a class="btn btn-primary mt-4 mb-4" th:href="@{'/employee/add'}"></a>                 &lt;!&ndash; COMPLETAR &ndash;&gt;-->
-<!--        <form class="input-group mb-lg-3" method="post" th:action="@{}">                &lt;!&ndash; COMPLETAR &ndash;&gt;-->
-            <!-- COMPLETAR -->
+        <a class="btn btn-primary mt-4 mb-4" th:href="@{'/employee/new'}">Nuevo empleado</a>
+
+        <form class="input-group mb-lg-3" method="post" th:action="@{/employee/BuscarEmployee}">
             <div class="input-group-append">
-                <!-- COMPLETAR -->
+                <input name="searchField" class="form-control mb-3" type="text" placeholder=""/>
+                <button class="btn btn-primary mt-4 mb-4" type="submit">Buscar</button>
+                <a class="btn btn-warning mt-4 mb-4" th:href="@{'/employee/list'}">Limpiar</a>
             </div>
         </form>
 
         <!-- COMPLETAR -->
         <!-- COMPLETAR -->
 <!--            <table class="table table-sm" th:if="${}">-->
+
+        <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success" role="alert"></div>
+
+        <table class="table table-sm">
                 <thead>
                 <tr>
-                    <!-- COMPLETAR -->
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Puesto</th>
+                    <th>Departamento</th>
+                    <th>Ciudad</th>
+                    <th></th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                <!-- COMPLETAR -->
+                    <tr th:each="employee, vEst : ${employeesList}">
+                        <td th:text="${vEst.index}"></td>
+                        <td th:text="${employee.getFirstName()}"></td>
+                        <td th:text="${employee.getLastName()}"></td>
+                        <td th:text="${employee.getJob().getJobTitle()}"></td>
+                        <td th:text="${employee.getDepartament().getDepartmentName()}"></td>
+                        <td th:text="${employee.getDepartament().getLocation().getCity()}"></td>
+                        <td><a class="btn btn-primary"
+                               th:href="@{'/employee/edit' + '?id=' + ${employee.getEmployeeId()}}">Editar</a>
+                        </td>
+                        <td><a class="btn btn-danger"
+                               th:href="@{'/employee/delete' + '?id=' + ${employee.getEmployeeId()}}">Borrar</a>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
