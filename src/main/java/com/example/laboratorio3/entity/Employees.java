@@ -21,6 +21,10 @@ public class Employees {
     private
     Departaments departament;
 
+    @ManyToOne
+    @JoinColumn(name="job_id")
+    private Jobs job;
+
     private LocalDateTime hireDate;
 
     public LocalDateTime getHireDate() {

@@ -18,10 +18,10 @@
         <th>Ciudad</th>
         <th>Cantidad</th>
     </tr>
-    <tr th:each=" : ${}">
-        <td th:text="${}"></td>
-        <td th:text="${}"></td>
-        <td th:text="${}"></td>
+    <tr th:each=" lista: ${listadepartamentoxPaísYciudad}">
+        <td th:text="${lista.getCountryname()}"></td>
+        <td th:text="${lista.getCiudadname()}"></td>
+        <td th:text="${lista.getCantidadDepartment()}"></td>
     </tr>
 </table>
 </body>

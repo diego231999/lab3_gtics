@@ -18,11 +18,11 @@
         <th>Apellido</th>
         <th>Sueldo</th>
     </tr>
-    <tr th:each=" : ${}">
-        <td th:text="${}"></td>
-        <td th:text="${}"></td>
-        <td th:text="${}"></td>
-        <td th:text="${}"></td>
+    <tr th:each=" lista: ${listareportesGerentes}">
+        <td th:text="${lista.getDepartmentname()}"></td>
+        <td th:text="${lista.getNombre}"></td>
+        <td th:text="${lista.getApellido}"></td>
+        <td th:text="${lista.getSalario}"></td>
     </tr>
 </table>
 </body>
