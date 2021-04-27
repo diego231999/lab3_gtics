@@ -15,6 +15,11 @@ public class Employees {
     private String firstName;
     private String lastName;
 
+    @ManyToOne
+    @JoinColumn(name = "department_id")
+    private
+    Departaments departament;
+
     public int getEmployeeId() {
         return employeeId;
     }
@@ -37,6 +42,14 @@ public class Employees {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Departaments getDepartament() {
+        return departament;
+    }
+
+    public void setDepartament(Departaments departament) {
+        this.departament = departament;
     }
 
 
