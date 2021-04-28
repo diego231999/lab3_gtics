@@ -24,11 +24,20 @@
     <table class="table table-sm" th:if="${}">
         <thead>
         <tr>
-            <!-- COMPLETAR -->
+            <td>Nombre</td>
+            <td>Apellido</td>
+            <td>Puesto</td>
+            <td>Departamento</td>
+            <td>Fecha Inicio</td>
         </tr>
         </thead>
         <tbody>
-        <!-- COMPLETAR -->
+        <tr th:each="employee : ${lista}">
+            <td th:text="${employee.getFirstName()}"></td>
+            <td th:text="${employee.getLastName()}"></td>
+            <!--<td th:text="${employee.getJobs().getJobTittle()}"></td>-->
+            <td th:text="${employee.getDepartament().getDepartmentName()}"></td>
+        </tr>
         </tbody>
     </table>
 </div>

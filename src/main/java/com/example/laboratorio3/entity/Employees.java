@@ -12,6 +12,7 @@ public class Employees {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "employeeid")
     private int employeeId;
     private String firstName;
     private String lastName;
