@@ -10,42 +10,66 @@
 </head>
 <body class="container">
     <h2>Editar Empleado</h2><hr />
-        <form method="post" th:action="@{}">
-            <!-- COMPLETAR -->
+    <form method="post" th:action="@{/employee/save}" th:object="${employee}">
+        <input th:field="*{employeeId}" type="hidden"/>
+        <div class="row">
+            <div class="form-group col-6">
 
-            <div class="row">
-                <div class="form-group col-6">
-                    <!-- COMPLETAR -->
-                </div>
-                <div class="form-group col-6">
-                    <!-- COMPLETAR -->
-                </div>
+                <label for="nombre">Nombre</label>
+                <input class="form-control" type="text"  id="nombre" name="firstName" th:field="*{firstName}">
+
             </div>
+            <div class="form-group col-6">
+                <label for="lastName">Apellido</label>
+                <input class="form-control" type="text"  id="lastName" name="lastName" th:field="*{lastName}">
 
-            <div class="form-group">
-                <!-- COMPLETAR -->
             </div>
+        </div>
 
-            <div class="row">
-                <div class="form-group col-6">
-                    <!-- COMPLETAR -->
-                </div>
-                <div class="form-group col-6">
-                    <!-- COMPLETAR -->
-                </div>
+        <div class="row">
+            <div class="form-group col-6">
+                <label for="email">Email</label>
+                <input class="form-control" type="text"  id="email" name="email" th:field="*{email}">
             </div>
-
-            <div class="row">
-                <div class="form-group col-6">
-                    <!-- COMPLETAR -->
-                </div>
-                <div class="form-group col-6">
-                    <!-- COMPLETAR -->
-                </div>
+            <div class="form-group col-6">
+                <label for="password">Password</label>
+                <input class="form-control" type="text"  id="password" name="password" th:field="*{password}">
             </div>
+        </div>
 
-            <a th:href="@{}" class="btn btn-danger"></a>                 <!-- COMPLETAR -->
-            <!-- COMPLETAR -->
-        </form>
+        <div class="row">
+            <div class="form-group col-6">
+                <label>Puesto</label>
+                <select name="job_id" class="custom-select" >
+                    <option th:each="job : ${jobs}" th:value="${job.getJobId()}" th:text="${job.getJobTitle()}"></option>
+                </select>
+            </div>
+            <div class="form-group col-6">
+                <label for="salary">salary</label>
+                <input class="form-control" type="number"  id="salary" name="salary" th:field="*{salary}">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-6">
+                <label>Jefe</label>
+                <select name="managerId" class="custom-select">
+                    <option th:each="department : ${departaments}" th:value="${department.getManagerId()}" th:text="${department.getManagerId()}"></option>
+                </select>
+            </div>
+            <div class="form-group col-6">
+                <label>Departamento</label>
+                <select name="department_id" class="custom-select">
+                    <option th:each="department : ${departaments}" th:value="${department.getDepartmentId()}" th:text="${department.getDepartmentName()}"></option>
+                </select>
+            </div>
+        </div>
+
+        <a th:href="@{/employee/list}" class="btn btn-danger">Cancelar</a>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <div class="row">
+            <div class="form-group"></div>
+        </div>
+    </form>
     </body>
 </html>
