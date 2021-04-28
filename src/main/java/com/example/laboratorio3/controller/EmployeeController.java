@@ -47,7 +47,7 @@ public class EmployeeController {
     }
 
     @PostMapping("/save")
-    public String guardarNuevoTransportista(@ModelAttribute("employee") Employees employee, Model model, RedirectAttributes attr,
+    public String guardarNuevoEmployee(@ModelAttribute("employee") Employees employee, Model model, RedirectAttributes attr,
                                             @RequestParam("job_id") String jobId,
                                             @RequestParam("department_id") String departmentId
                                                 ) {
@@ -104,36 +104,12 @@ public class EmployeeController {
         }
     }
 
-//    public String nuevoEmployeeForm( ) {
-//        //COMPLETAR
-//        return "";
-//    }
-//
-//
-//    public String guardarEmployee() {
-//        //COMPLETAR
-//        return "";
-//    }
-//
-//
-//    public String editarEmployee() {
-//        //COMPLETAR
-//        return "";
-//    }
-//
-//
-//    public String borrarEmpleado() {
-//
-//       //COMPLETAR
-//        return "";
-//    }
-
     @PostMapping("/BuscarEmployee")
     public String buscarEmployee(@RequestParam("searchField") String searchField,
                                  Model model) {
 
-        List<Employees> employeesListByFirstName = employeesRepository.findAllByFirstName(searchField);
-        List<Employees> employeesListByLastName = employeesRepository.findAllByLastName(searchField);
+        List<Employees> employeesListByFirstName = employeesRepository.findByFirstNameContaining(searchField);
+        List<Employees> employeesListByLastName = employeesRepository.findByLastNameContaining(searchField);
 
         List<Employees> employeesList = new ArrayList<Employees>();
         employeesList.addAll(employeesListByFirstName);

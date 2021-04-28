@@ -10,25 +10,41 @@
     <title>Historial de Empleados</title>
 </head>
 <body>
+<nav th:replace="index.html :: nav"></nav>
+
 <div class="container">
     <h1>Historial de Empleados</h1>
-    <form class="input-group mb-lg-3" method="post" th:action="@{}">                <!-- COMPLETAR -->
-        <!-- COMPLETAR -->
-        <div class="input-group-append">
-            <!-- COMPLETAR -->
+
+    <form class="form-inline mb-3" method="post" th:action="@{/historial/buscar}">
+        <div class="container-md">
+            <div class="input-group mb-2">
+                <input class="form-control mr-2" placeholder="Search" name="searchName">
+                <button class="btn btn-outline-info" type="submit">Buscar</button>
+                <a class="btn btn-outline-danger" th:href="@{/historial/listar}">Limpiar</a>
+            </div>
         </div>
     </form>
 
     <!-- COMPLETAR -->
     <!-- COMPLETAR -->
-    <table class="table table-sm" th:if="${}">
+    <table class="table table-sm">
         <thead>
         <tr>
-            <!-- COMPLETAR -->
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Puesto</th>
+            <th>Departamento</th>
+            <th>Fecha de Inicio</th>
         </tr>
         </thead>
         <tbody>
-        <!-- COMPLETAR -->
+            <tr th:each="empleado: ${historialEmpleados}">
+                <td th:text="${empleado.getEmployees().getFirstName()}"></td>
+                <td th:text="${empleado.getEmployees().getLastName()}"></td>
+                <td th:text="${empleado.getEmployees().getJob().getJobTitle()}"></td>
+                <td th:text="${empleado.getEmployees().getDepartament().getDepartmentName()}"></td>
+                <td th:text="${empleado.getStartDate()}"></td>
+            </tr>
         </tbody>
     </table>
 </div>

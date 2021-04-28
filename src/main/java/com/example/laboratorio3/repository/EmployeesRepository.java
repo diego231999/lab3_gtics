@@ -1,6 +1,8 @@
 package com.example.laboratorio3.repository;
 
 
+import com.example.laboratorio3.dto.DepartamentoXPaísYciudad;
+import com.example.laboratorio3.dto.GerentesXexperiencia;
 import com.example.laboratorio3.entity.Employees;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,15 +14,23 @@ import java.util.List;
 @Repository
 public interface EmployeesRepository extends JpaRepository<Employees, Integer> {
 
-    List<Employees> findAllByFirstName(String employeeFirstName);
-    List<Employees> findAllByLastName(String employeeLastName);
+    List<Employees> findByFirstNameContaining(String employeeFirstName);
+    List<Employees> findByLastNameContaining(String employeeLastName);
 
-    @Query(value="select e.first_name, e.last_name, h.start_date, h.end_date,job_title from employees e, jobs j, job_history h where e.job_id=j.job_id and h.job_id=j.job_id and e.salary>1500;", nativeQuery = true)
-    Employees listaReportesEmployee();
+    @Query(value = "select c.country_name, l.city, count(e.employee_id) \n" +
+            "     from countries c\n" +
+            "     inner join locations l on (c.country_id=l.country_id)\n" +
+            "     inner join departments d on (d.location_id=l.location_id)\n" +
+            "     inner join employees e on (e.department_id=d.department_id)\n" +
+            "     group by d.department_id;", nativeQuery = true)
+    List<DepartamentoXPaísYciudad> listaDepartamentoXPaisYCiudad();
 
-    @Query(value = "select e.first_name, e.last_name, j.job_title, d.department_name, e.hire_date from employees e, jobs j, departments d where e.department_id = d.department_id and e.job_id = j.job_id order by e.first_name ASC;", nativeQuery = true)
-    List<Employees> historialEmployees();
 
-//    List<Employees>  findByEmployeeFirstNameO (String text);
-
+    //NO HABIA EMPLEADOS TRABAJANDO MAS DE 5 AÑOS, ENTONCES IMPRIME LOS QUE TIENEN MAS DE 1
+    @Query(value = "select concat(j.first_name,' ',j.last_name) as 'Nombres',\n" +
+            "\t\tfloor((DATEDIFF(h.end_date,h.start_date))/365) as `Años trabajando`\n" +
+            "from employees e, employees j, job_history h\n" +
+            "where e.manager_id = j.employee_id and j.employee_id = h.employee_id and floor((DATEDIFF(h.end_date,h.start_date))/365) > 0\n" +
+            "group by j.employee_id;", nativeQuery = true)
+    List<GerentesXexperiencia> listaGerentesXexperiencia();
 }
