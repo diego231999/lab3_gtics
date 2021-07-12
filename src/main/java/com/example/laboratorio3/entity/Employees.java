@@ -20,8 +20,6 @@ public class Employees {
     private String email;
     private String password;
     private float salary;
-
-    @Column(nullable = true)
     private Integer managerId;
 
     @ManyToOne
@@ -105,6 +103,4 @@ public class Employees {
         this.email = email;
     }
 
-
-    //COMPLETAR relacion con otras tablas
 }

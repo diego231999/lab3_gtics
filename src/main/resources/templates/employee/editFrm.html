@@ -3,64 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <title>Nuevo Empleado</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
-<body class="container">
-    <h2>Editar Empleado</h2><hr />
+<body>
+
+<nav th:replace="index.html :: nav"></nav>
+
+<div class="container">
+    <h2>Editar Empleado</h2>
+    <hr/>
     <form method="post" th:action="@{/employee/save}" th:object="${employee}">
         <input th:field="*{employeeId}" type="hidden"/>
         <div class="row">
+
+            <input class="form-control" type="hidden" th:field="*{employeeId}">
+
             <div class="form-group col-6">
 
-                <label for="nombre">Nombre</label>
-                <input class="form-control" type="text"  id="nombre" name="firstName" th:field="*{firstName}">
+                <label>Nombre</label>
+                <input class="form-control" type="text" th:field="*{firstName}">
 
             </div>
             <div class="form-group col-6">
-                <label for="lastName">Apellido</label>
-                <input class="form-control" type="text"  id="lastName" name="lastName" th:field="*{lastName}">
+                <label>Apellido</label>
+                <input class="form-control" type="text"  th:field="*{lastName}">
 
             </div>
         </div>
 
         <div class="row">
             <div class="form-group col-6">
-                <label for="email">Email</label>
-                <input class="form-control" type="text"  id="email" name="email" th:field="*{email}">
-            </div>
-            <div class="form-group col-6">
-                <label for="password">Password</label>
-                <input class="form-control" type="text"  id="password" name="password" th:field="*{password}">
+                <label>Email</label>
+                <input class="form-control" type="text" th:field="*{email}">
             </div>
         </div>
 
         <div class="row">
             <div class="form-group col-6">
                 <label>Puesto</label>
-                <select name="job_id" class="custom-select" >
-                    <option th:each="job : ${jobs}" th:value="${job.getJobId()}" th:text="${job.getJobTitle()}"></option>
+                <select class="custom-select" th:field="*{job.jobId}">
+                    <option th:each="job : ${jobs}" th:value="${job.getJobId()}"
+                            th:text="${job.getJobTitle()}"></option>
                 </select>
             </div>
             <div class="form-group col-6">
                 <label for="salary">salary</label>
-                <input class="form-control" type="number"  id="salary" name="salary" th:field="*{salary}">
+                <input class="form-control" type="number" id="salary" name="salary" th:field="*{salary}">
             </div>
         </div>
 
         <div class="row">
             <div class="form-group col-6">
                 <label>Jefe</label>
-                <select name="managerId" class="custom-select">
-                    <option th:each="department : ${departaments}" th:value="${department.getManagerId()}" th:text="${department.getManagerId()}"></option>
+                <select class="custom-select" th:field="*{managerId}">
+                    <option th:each="manager : ${managers}" th:value="${manager.getManagerId()}"
+                            th:text="${manager.getFirstName()} + ' ' + ${manager.getLastName()}"></option>
                 </select>
             </div>
             <div class="form-group col-6">
                 <label>Departamento</label>
-                <select name="department_id" class="custom-select">
-                    <option th:each="department : ${departaments}" th:value="${department.getDepartmentId()}" th:text="${department.getDepartmentName()}"></option>
+                <select class="custom-select" th:field="*{departament.departmentId}">
+                    <option th:each="department : ${departaments}" th:value="${department.getDepartmentId()}"
+                            th:text="${department.getDepartmentName()}"></option>
                 </select>
             </div>
         </div>
@@ -71,5 +78,6 @@
             <div class="form-group"></div>
         </div>
     </form>
-    </body>
+</div>
+</body>
 </html>

@@ -30,53 +30,58 @@ public class EmployeeController {
     JobsRepository jobsRepository;
 
     @GetMapping("/list")
-    public String listaEmployee( Model model ){
+    public String listaEmployee(Model model) {
         List<Employees> employeesList = employeesRepository.findAll();
         model.addAttribute("employeesList", employeesList);
         return "employee/lista";
     }
 
     @GetMapping("/new")
-    public String nuevoEmployeeForm(@ModelAttribute("employee") Employees employees, Model model) {
+    public String nuevoEmployeeForm(Employees employees, Model model) {
         List<Departaments> departaments = departamentsRepository.findAll();
         List<Jobs> jobs = jobsRepository.findAll();
+        List<Employees> managers = employeesRepository.findAll();
 
         model.addAttribute("departaments", departaments);
         model.addAttribute("jobs", jobs);
+        model.addAttribute("managers", managers);
         return "employee/newFrm";
     }
 
     @PostMapping("/save")
-    public String guardarNuevoTransportista(@ModelAttribute("employee") Employees employee, Model model, RedirectAttributes attr,
-                                            @RequestParam("job_id") String jobId,
-                                            @RequestParam("department_id") String departmentId
-                                                ) {
+    public String guardarNuevoEmployee(Employees employee, RedirectAttributes attr) {
+        System.out.println(employee.getManagerId() + "##################3\n");
+        System.out.println(employee.getJob().getJobId() + "##################33\n");
+        System.out.println(employee.getDepartament().getDepartmentId() + "##################333\n");
+/*
+        Optional<Jobs> job = jobsRepository.findById(employee.getJob().getJobId());
+        employee.setJob(job.get());
 
-            Optional<Jobs> job = jobsRepository.findById(jobId);
-            employee.setJob(job.get());
+        Optional<Departaments> departament;
+        departament = departamentsRepository.findById(employee.getDepartament().getDepartmentId());
+        employee.setDepartament(departament.get()); */
 
-            Optional<Departaments> departament;
-            departament = departamentsRepository.findById(Integer.parseInt(departmentId));
-            employee.setDepartament(departament.get());
+        if (employee.getEmployeeId() != null) {
+            attr.addFlashAttribute("msgEdit", "Employee actualizado exitosamente");
+        } else {
+            attr.addFlashAttribute("msgCreate", "Employee creado exitosamente");
+        }
 
-            employeesRepository.save(employee);
-
-            attr.addFlashAttribute("msg", "Employee creado exitosamente");
-            return "redirect:/employee/list";
-
+        employeesRepository.save(employee);
+        return "redirect:/employee/list";
 
     }
 
     @GetMapping("/delete")
     public String borrarEmployee(Model model,
-                                      @RequestParam("id") int id,
-                                      RedirectAttributes attr) {
+                                 @RequestParam("id") int id,
+                                 RedirectAttributes attr) {
 
         Optional<Employees> optionalEmployees = employeesRepository.findById(id);
 
         if (optionalEmployees.isPresent()) {
             employeesRepository.deleteById(id);
-            attr.addFlashAttribute("msg", "Employee borrado exitosamente");
+            attr.addFlashAttribute("msgDelete", "Employee borrado exitosamente");
         }
         return "redirect:/employee/list";
 
@@ -84,8 +89,8 @@ public class EmployeeController {
 
     @GetMapping("/edit")
     public String editarEmployee(Model model,
-                                      @RequestParam("id") int id,
-                                      @ModelAttribute("employee") Employees employees) {
+                                 @RequestParam("id") int id,
+                                 @ModelAttribute("employee") Employees employees) {
 
         Optional<Employees> optionalEmployees = employeesRepository.findById(id);
 
@@ -93,40 +98,15 @@ public class EmployeeController {
             employees = optionalEmployees.get();
             model.addAttribute("employee", employees);
 
-            List<Departaments> departaments = departamentsRepository.findAll();
-            List<Jobs> jobs = jobsRepository.findAll();
-            model.addAttribute("departaments", departaments);
-            model.addAttribute("jobs", jobs);
+            model.addAttribute("departaments", departamentsRepository.findAll());
+            model.addAttribute("jobs", jobsRepository.findAll());
+            model.addAttribute("managers", employeesRepository.findAll());
 
             return "employee/editFrm";
         } else {
             return "redirect:/employee/list";
         }
     }
-
-//    public String nuevoEmployeeForm( ) {
-//        //COMPLETAR
-//        return "";
-//    }
-//
-//
-//    public String guardarEmployee() {
-//        //COMPLETAR
-//        return "";
-//    }
-//
-//
-//    public String editarEmployee() {
-//        //COMPLETAR
-//        return "";
-//    }
-//
-//
-//    public String borrarEmpleado() {
-//
-//       //COMPLETAR
-//        return "";
-//    }
 
     @PostMapping("/BuscarEmployee")
     public String buscarEmployee(@RequestParam("searchField") String searchField,
